@@ -13,7 +13,7 @@ stylesheets can call `@import "ui-variables";` and reference it.
 
 /*
 After changing variables to set a base for our theme, we can use
-specific, narrowly-scoped CSS rules to change other things. 
+specific, narrowly-scoped CSS rules to change other things.
 
 Tip: You can use the Developer Tools in Mailspring and "Inspect
 Element" to identify the DOM elements and styles you want to override.
@@ -23,30 +23,233 @@ here, so you can use modern CSS like -webkit-filter and -webkit-mask-image
 (which is used to make most of the icons in the app styleable via a
 background color.)
 */
-.sheet-toolbar {
-  border-bottom: 1px solid @border-color-divider;
-  box-shadow: none;
+
+// .sheet-toolbar {
+//   border-bottom: 1px solid @border-color-divider;
+//   box-shadow: none;
+// }
+
+// .thread-icon:not(.thread-icon-unread):not(.thread-icon-star) {
+//   -webkit-filter: invert(100%);
+// }
+// img.content-dark {
+//   -webkit-filter: invert(100%);
+// }
+// img.content-light {
+//   -webkit-filter: invert(100%);
+// }
+
+// .mail-label {
+//   -webkit-filter: contrast(110%) brightness(85%);
+// }
+
+// #message-list .message-item-wrap .message-item-white-wrap {
+//   box-shadow: 0 0 0.5px rgba(255, 255, 255, 0.28),
+//     0 1px 1.5px rgba(255, 255, 255, 0.08);
+// }
+
+// .thread-list .list-item:not(.unread):not(.selected):not(.focused) {
+//   color: #aaa;
+// }
+//
+//
+//
+
+// Globals.
+
+@import (css) url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+
+mailspring-workspace {
+    font-family: Lato, 'Nylas-Pro', 'Helvetica', sans-serif;
 }
 
-.thread-icon:not(.thread-icon-unread):not(.thread-icon-star) {
-  -webkit-filter: invert(100%);
-}
-img.content-dark {
-  -webkit-filter: invert(100%);
-}
-img.content-light {
-  -webkit-filter: invert(100%);
+// Sidebar.
+
+.account-sidebar {
+    padding-top: 15px;
 }
 
-.mail-label {
-  -webkit-filter: contrast(110%) brightness(85%);
+.account-sidebar .heading {
+  color: fade(@sidebar-text, 50%);
+
+  font-weight: 400;
+  font-size: inherit;
+
+  & + div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
-#message-list .message-item-wrap .message-item-white-wrap {
-  box-shadow: 0 0 0.5px rgba(255, 255, 255, 0.28),
-    0 1px 1.5px rgba(255, 255, 255, 0.08);
+.account-sidebar .item {
+    color: @sidebar-text;
 }
 
-.thread-list .list-item:not(.unread):not(.selected):not(.focused) {
-  color: #aaa;
+.outline-view .item .name {
+    flex-grow: 1;
+}
+
+.outline-view .item .item-count-box.alt-count {
+    padding: 0;
+
+    color: #fff;
+    background: transparent;
+
+    font-weight: 400;
+    font-size: inherit;
+}
+
+.outline-view .item.selected {
+    color: @sidebar-text;
+
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        left: -500px;
+        top: 0;
+        width: 1000px;
+        height: 100%;
+
+        background: rgba(255, 255, 255, 0.15);
+
+        pointer-events: none;
+    }
+}
+
+.outline-view .item img.content-mask {
+    background-color: @sidebar-faint-icon;
+}
+
+.outline-view .item.selected img.content-mask {
+    background-color: @sidebar-text;
+}
+
+.outline-view .item-container {
+    position: relative;
+}
+
+.disclosure-triangle div {
+    border: none;
+
+    width: 5px;
+    height: 5px;
+
+    border-right: 1px solid @sidebar-disclosure;
+    border-bottom: 1px solid @sidebar-disclosure;
+
+    transform: rotate(45deg);
+}
+
+.disclosure-triangle.collapsed div {
+    transform: rotate(-45deg);
+}
+
+// Main list.
+
+.thread-list-narrow .participants {
+    font-weight: 700;
+}
+
+.thread-list-narrow .subject {
+    font-weight: 400;
+}
+
+.thread-list .unread:not(.focused) .subject, .draft-list .unread:not(.focused) .subject {
+    font-weight: 700;
+}
+
+.thread-list .thread-icon, .draft-list .thread-icon {
+    background-size: 9px;
+}
+
+// Message view.
+
+#message-list .message-header {
+    font-size: inherit;
+}
+
+#message-list .header-toggle-control {
+    width: 18px;
+    height: 22px;
+
+    img {
+        display: none;
+    }
+
+    &:after {
+        content: '';
+
+        position: absolute;
+
+        left: 3px;
+        top: ~"calc(50% - 2px)";
+        width: 5px;
+        height: 5px;
+
+        border-right: 1px solid @header-toggle;
+        border-bottom: 1px solid @header-toggle;
+
+        transform: rotate(45deg);
+    }
+
+    &.inactive {
+        display: block;
+
+        &:after {
+            transform: rotate(-45deg);
+        }
+    }
+}
+
+#message-list .message-subject {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.message-participants .expanded-participants .to-label, .message-participants .expanded-participants .reply-to-label, .message-participants .expanded-participants .cc-label {
+    margin-right: 0;
+}
+
+.participants.message-participants.to-participants .collapsed-participants {
+    margin-top: 0.2em;
+}
+
+// Composer.
+
+.header-container .tokenizing-field .token {
+    padding: 0 20px 0 5px;
+
+    box-shadow: none;
+    background: transparent;
+
+    color: @text-highlight;
+}
+
+.header-container .tokenizing-field .token.selected {
+    color: #fff;
+}
+
+.composer-participant-field .participant .participant-primary {
+    font-weight: 400;
+}
+
+// Undo ivory background when not focused.
+
+#message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap {
+    background: #fff;
+}
+
+#message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap .composer-action-bar-wrap {
+    background: #fff;
+}
+
+#message-list .message-item-wrap .message-item-white-wrap.composer-outer-wrap .RichEditor-toolbar .inner {
+    background: #fff;
+}
+
+.message-item-white-wrap.composer-outer-wrap .composer-participant-field .dropdown-component .signature-button-dropdown .only-item {
+    background: #fff;
 }
