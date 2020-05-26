@@ -60,6 +60,13 @@ background color.)
 @import (css) url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
 mailspring-workspace {
+    // Allow wide sidebar.
+    --account-sidebar-max-width: 500;
+    // Effectively always 'narrow' multiline style.
+    --thread-list-narrow-style-width: 5000;
+    // Make taller previews, two lines.
+    --thread-list-item-height-narrow: 105;
+
     font-family: Lato, 'Nylas-Pro', 'Helvetica', sans-serif;
 }
 
@@ -252,4 +259,26 @@ mailspring-workspace {
 
 .message-item-white-wrap.composer-outer-wrap .composer-participant-field .dropdown-component .signature-button-dropdown .only-item {
     background: #fff;
+}
+
+.list-tabular .list-tabular-item {
+    padding-top: 8px;
+    align-items: flex-start;
+}
+
+.thread-list-narrow .snippet-and-labels .snippet {
+    min-height: 32px;
+    max-height: 32px;
+
+    margin-top: 2px;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+
+    font-size: 13px;
+    line-height: 16px;
 }
